@@ -1,0 +1,2109 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HANGUK — Korean Learning World</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap");
+
+      :root {
+        --bg: #090b13;
+        --panel: #111522;
+        --panel2: #171c2c;
+        --line: rgba(255, 255, 255, 0.09);
+        --text: #f5f6ff;
+        --muted: #9299b3;
+        --purple: #9a7bff;
+        --cyan: #54e7f4;
+        --pink: #ff76b7;
+        --green: #75e7b0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        background:
+          radial-gradient(ellipse at 75% 0%, #25204b 0%, transparent 35%),
+          radial-gradient(ellipse at 0% 70%, #122b39 0%, transparent 30%),
+          var(--bg);
+        color: var(--text);
+        font-family: Inter, sans-serif;
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 245px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 28px 18px;
+        border-right: 1px solid var(--line);
+        background: rgba(9, 11, 19, 0.8);
+        backdrop-filter: blur(20px);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 8px 32px;
+      }
+
+      .logo-icon {
+        width: 43px;
+        height: 43px;
+        border-radius: 15px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--purple), var(--cyan));
+        color: #090b13;
+        font-size: 22px;
+        font-weight: 900;
+        box-shadow: 0 0 30px #9a7bff35;
+      }
+
+      .logo h2 {
+        font-size: 19px;
+        letter-spacing: 2px;
+      }
+
+      .logo p {
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        margin-top: 4px;
+      }
+
+      .menu-label {
+        color: #686f89;
+        font-size: 10px;
+        letter-spacing: 2px;
+        font-weight: 800;
+        padding: 14px 12px 10px;
+      }
+
+      .nav-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        padding: 13px 12px;
+        margin: 3px 0;
+        background: transparent;
+        color: var(--muted);
+        transition: 0.25s;
+      }
+
+      .nav-btn:hover {
+        color: white;
+        background: #ffffff08;
+      }
+
+      .nav-btn.active {
+        color: white;
+        background: linear-gradient(100deg, #9a7bff24, #54e7f40b);
+        border-color: #9a7bff35;
+      }
+
+      .nav-icon {
+        font-size: 19px;
+        width: 24px;
+        text-align: center;
+      }
+
+      .sidebar-bottom {
+        margin-top: auto;
+        padding: 17px;
+        background: linear-gradient(135deg, #9a7bff18, #54e7f410);
+        border: 1px solid #9a7bff28;
+        border-radius: 17px;
+      }
+
+      .sidebar-bottom p {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.7;
+        margin-top: 8px;
+      }
+
+      .main {
+        min-width: 0;
+        padding: 30px 36px 60px;
+        max-width: 1600px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 35px;
+      }
+
+      .breadcrumb {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+
+      .breadcrumb span {
+        color: var(--cyan);
+      }
+
+      .topbar h1 {
+        font-size: clamp(23px, 3vw, 32px);
+        letter-spacing: -1px;
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .level-pill {
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 12px;
+        color: var(--cyan);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #ff76b7, #9a7bff);
+        font-weight: 900;
+        color: white;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 270px;
+        padding: 36px;
+        border-radius: 25px;
+        border: 1px solid #9a7bff30;
+        background:
+          radial-gradient(circle at 82% 50%, #54e7f425, transparent 25%),
+          linear-gradient(110deg, #1c1b38, #141a2b 65%, #102a35);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 26px;
+      }
+
+      .hero::after {
+        content: "한글";
+        position: absolute;
+        right: 7%;
+        top: 50%;
+        transform: translateY(-50%) rotate(-9deg);
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: clamp(90px, 15vw, 190px);
+        font-weight: 900;
+        color: #ffffff08;
+        pointer-events: none;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 580px;
+      }
+
+      .eyebrow {
+        color: var(--cyan);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        margin-bottom: 17px;
+      }
+
+      .hero h2 {
+        font-size: clamp(28px, 4vw, 43px);
+        line-height: 1.15;
+        letter-spacing: -1.5px;
+        margin-bottom: 15px;
+      }
+
+      .hero h2 span {
+        color: var(--purple);
+      }
+
+      .hero p {
+        max-width: 450px;
+        color: #aeb5cf;
+        font-size: 13px;
+        line-height: 1.9;
+      }
+
+      .primary-btn {
+        margin-top: 15px;
+        padding: 13px 19px;
+        border: 0;
+        border-radius: 11px;
+        background: linear-gradient(110deg, var(--purple), #7663ef);
+        color: white;
+        font-weight: 800;
+        box-shadow: 0 8px 25px #9a7bff24;
+        transition: 0.2s;
+      }
+
+      .primary-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px #9a7bff40;
+      }
+
+      .hero-symbol {
+        position: relative;
+        z-index: 1;
+        width: 150px;
+        height: 150px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        border: 1px solid #54e7f447;
+        display: grid;
+        place-items: center;
+        background: #54e7f40b;
+        box-shadow:
+          0 0 60px #54e7f410,
+          inset 0 0 35px #54e7f40a;
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 66px;
+        font-weight: 900;
+        color: var(--cyan);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 15px;
+        margin-bottom: 35px;
+      }
+
+      .stat-card {
+        background: linear-gradient(145deg, #151a29, #101420);
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        padding: 20px;
+        transition: 0.25s;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-4px);
+        border-color: #9a7bff45;
+      }
+
+      .stat-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .stat-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: #9a7bff18;
+        font-size: 19px;
+      }
+
+      .stat-card:nth-child(2) .stat-icon {
+        background: #54e7f418;
+      }
+      .stat-card:nth-child(3) .stat-icon {
+        background: #ff76b718;
+      }
+      .stat-card:nth-child(4) .stat-icon {
+        background: #75e7b018;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .stat-value {
+        font-size: 27px;
+        font-weight: 800;
+        letter-spacing: -1px;
+      }
+
+      .stat-note {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 7px;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin: 34px 0 17px;
+      }
+
+      .section-head h2 {
+        font-size: 19px;
+        letter-spacing: -0.5px;
+      }
+
+      .section-head p {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 6px;
+      }
+
+      .learning-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .lesson-card {
+        position: relative;
+        overflow: hidden;
+        padding: 23px;
+        min-height: 205px;
+        background: linear-gradient(145deg, #171c2c, #101420);
+        border: 1px solid var(--line);
+        border-radius: 19px;
+        transition: 0.3s;
+        cursor: pointer;
+      }
+
+      .lesson-card:hover {
+        transform: translateY(-5px);
+        border-color: #9a7bff65;
+        box-shadow: 0 15px 35px #00000020;
+      }
+
+      .lesson-card::after {
+        content: "";
+        position: absolute;
+        width: 130px;
+        height: 130px;
+        right: -50px;
+        bottom: -65px;
+        background: var(--glow, #9a7bff);
+        filter: blur(65px);
+        opacity: 0.23;
+      }
+
+      .lesson-number {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .lesson-symbol {
+        margin: 17px 0;
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 38px;
+        font-weight: 900;
+        color: var(--glow, var(--purple));
+      }
+
+      .lesson-card h3 {
+        font-size: 15px;
+        margin-bottom: 8px;
+      }
+
+      .lesson-card p {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.8;
+      }
+
+      .progress-bar {
+        height: 5px;
+        border-radius: 10px;
+        background: #ffffff0d;
+        margin-top: 18px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 10px;
+        background: linear-gradient(90deg, var(--purple), var(--cyan));
+        transition: width 0.5s;
+      }
+
+      .content-panel {
+        display: none;
+        animation: appear 0.35s ease;
+      }
+
+      .content-panel.active {
+        display: block;
+      }
+
+      @keyframes appear {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .alphabet-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+        gap: 12px;
+      }
+
+      .letter-card {
+        min-height: 135px;
+        padding: 17px 10px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: var(--panel);
+        text-align: center;
+        cursor: pointer;
+        transition: 0.2s;
+        position: relative;
+      }
+
+      .letter-card:hover {
+        background: #1c2033;
+        border-color: var(--cyan);
+        transform: translateY(-3px);
+      }
+
+      .letter-card.learned {
+        border-color: var(--green);
+        background: #75e7b00d;
+      }
+
+      .letter-card .kr {
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 34px;
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+
+      .letter-card .sound {
+        color: var(--cyan);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .letter-card .kind {
+        color: var(--muted);
+        font-size: 10px;
+        margin-top: 4px;
+      }
+
+      .audio-btn {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--line);
+        color: var(--cyan);
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        display: inline-grid;
+        place-items: center;
+        font-size: 12px;
+        transition: 0.2s;
+        margin-left: 8px;
+        flex-shrink: 0;
+      }
+
+      .audio-btn:hover {
+        background: var(--cyan);
+        color: #090b13;
+      }
+
+      .grammar-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 18px;
+      }
+
+      .grammar-card {
+        min-height: 230px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: linear-gradient(145deg, #1a2033, #101420);
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .grammar-card:hover {
+        transform: translateY(-5px);
+        border-color: #9a7bff70;
+        box-shadow: 0 10px 30px rgba(154, 123, 255, 0.15);
+      }
+
+      .grammar-card .tag {
+        align-self: flex-start;
+        color: var(--purple);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        background: #9a7bff18;
+        padding: 6px 10px;
+        border-radius: 8px;
+        margin-bottom: 14px;
+      }
+
+      .grammar-card h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+        color: var(--text);
+      }
+
+      .grammar-card p {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .grammar-card .click-hint {
+        margin-top: auto;
+        padding-top: 15px;
+        color: var(--cyan);
+        font-size: 12px;
+        font-weight: 700;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px dashed var(--line);
+      }
+
+      .vocab-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .vocab-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 17px 20px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+
+      .vocab-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .vocab-kr {
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 23px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+      }
+
+      .vocab-uz {
+        color: var(--muted);
+        font-size: 12px;
+        margin-top: 5px;
+      }
+
+      .vocab-pron {
+        color: var(--cyan);
+        font-size: 11px;
+        margin-top: 5px;
+      }
+
+      .small-btn {
+        border: 1px solid var(--line);
+        background: #ffffff08;
+        color: white;
+        padding: 9px 12px;
+        border-radius: 10px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .small-btn:hover {
+        border-color: var(--cyan);
+      }
+
+      .small-btn.active {
+        background: var(--green);
+        color: #090b13;
+        border-color: var(--green);
+        font-weight: 700;
+      }
+
+      .quiz-box {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 30px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+      }
+
+      .quiz-progress {
+        height: 5px;
+        background: #ffffff0d;
+        border-radius: 10px;
+        margin-bottom: 28px;
+        overflow: hidden;
+      }
+
+      .quiz-progress div {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--purple), var(--cyan));
+        transition: 0.3s;
+      }
+
+      .quiz-question {
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 32px;
+        font-weight: 900;
+        margin: 20px 0 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .quiz-sub {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 24px;
+      }
+
+      .quiz-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .quiz-option {
+        border: 1px solid var(--line);
+        background: #ffffff05;
+        color: white;
+        padding: 15px;
+        border-radius: 12px;
+        text-align: left;
+        transition: 0.2s;
+        cursor: pointer;
+      }
+
+      .quiz-option:hover {
+        border-color: var(--purple);
+        background: #9a7bff10;
+      }
+
+      .quiz-option.correct {
+        border-color: var(--green);
+        background: #75e7b015;
+      }
+
+      .quiz-option.wrong {
+        border-color: var(--pink);
+        background: #ff76b715;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        outline: none;
+        color: white;
+        background: var(--panel);
+        margin-bottom: 18px;
+      }
+
+      .search-box:focus {
+        border-color: var(--purple);
+      }
+
+      .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 25px;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        background: #171c2c;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        color: white;
+        outline: none;
+      }
+
+      .form-control:focus {
+        border-color: var(--cyan);
+      }
+
+      textarea.form-control {
+        min-height: 90px;
+        resize: vertical;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 12px;
+      }
+
+      .tab-btn {
+        background: transparent;
+        border: 0;
+        color: var(--muted);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 13px;
+      }
+
+      .tab-btn.active {
+        background: var(--purple);
+        color: white;
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        background: #000000a8;
+        backdrop-filter: blur(8px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .modal-backdrop.show {
+        display: flex;
+      }
+
+      .modal {
+        width: min(650px, 100%);
+        max-height: 88vh;
+        overflow: auto;
+        padding: 30px;
+        background: #151a29;
+        border: 1px solid #ffffff16;
+        border-radius: 23px;
+        box-shadow: 0 25px 100px #00000070;
+        animation: appear 0.25s ease;
+      }
+
+      .modal-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 15px;
+      }
+
+      .modal-top h2 {
+        font-size: 26px;
+        color: var(--cyan);
+      }
+
+      .close-btn {
+        width: 37px;
+        height: 37px;
+        border: 1px solid var(--line);
+        background: #ffffff08;
+        color: white;
+        border-radius: 11px;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .modal-section {
+        margin-bottom: 20px;
+      }
+
+      .modal-section h4 {
+        font-size: 13px;
+        color: var(--purple);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .formula-box {
+        background: #111522;
+        border: 1px solid var(--purple);
+        padding: 12px 16px;
+        border-radius: 12px;
+        color: var(--text);
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+
+      .example-item {
+        padding: 14px;
+        background: #ffffff06;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .example-kr {
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        color: var(--cyan);
+      }
+
+      .example-uz {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 25px;
+        left: 50%;
+        transform: translate(-50%, 20px);
+        padding: 12px 18px;
+        border-radius: 12px;
+        background: #20283a;
+        border: 1px solid #54e7f440;
+        color: white;
+        font-size: 13px;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s;
+        z-index: 50;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+
+      @media (max-width: 720px) {
+        .app {
+          display: block;
+        }
+        .sidebar {
+          position: relative;
+          height: auto;
+          padding: 16px;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .menu-label,
+        .sidebar-bottom {
+          display: none;
+        }
+        .nav-list {
+          display: flex;
+          gap: 7px;
+          overflow-x: auto;
+          padding-bottom: 3px;
+        }
+        .nav-btn {
+          width: auto;
+          flex-shrink: 0;
+          padding: 10px 12px;
+          margin: 0;
+          font-size: 12px;
+        }
+        .learning-grid {
+          grid-template-columns: 1fr;
+        }
+        .stats {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="logo">
+          <div class="logo-icon">한</div>
+          <div>
+            <h2>HANGUK</h2>
+            <p>KOREAN LEARNING WORLD</p>
+          </div>
+        </div>
+
+        <div class="menu-label">O‘RGANISH</div>
+
+        <nav class="nav-list" id="navigation">
+          <button class="nav-btn active" data-page="home">
+            <span class="nav-icon">⌂</span> Bosh sahifa
+          </button>
+          <button class="nav-btn" data-page="alphabet">
+            <span class="nav-icon">한</span> Hangul alifbosi
+          </button>
+          <button class="nav-btn" data-page="grammar">
+            <span class="nav-icon">文</span> Grammatika (0 dan)
+          </button>
+          <button class="nav-btn" data-page="vocabulary">
+            <span class="nav-icon">▤</span> Lug‘at
+          </button>
+          <button class="nav-btn" data-page="quiz">
+            <span class="nav-icon">✳</span> Testlar
+          </button>
+          <button
+            class="nav-btn"
+            data-page="add-content"
+            style="color: var(--cyan)"
+          >
+            <span class="nav-icon">➕</span> Yangi qo‘shish
+          </button>
+          <button class="nav-btn" data-page="progress">
+            <span class="nav-icon">◷</span> Natijalar
+          </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <strong>오늘의 목표 ✦</strong>
+          <p>
+            Har kuni ozgina o‘rgan. Katta natijalar kichik qadamlardan
+            boshlanadi.
+          </p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <div class="breadcrumb">
+              HANGUK / <span id="breadcrumb">BOSH SAHIFA</span>
+            </div>
+            <h1 id="pageTitle">Koreys tiliga xush kelibsiz!</h1>
+          </div>
+
+          <div class="top-actions">
+            <div class="level-pill">✦ BEGINNER · A1</div>
+            <div class="avatar">한</div>
+          </div>
+        </header>
+
+        <!-- BOSH SAHIFA -->
+        <section class="content-panel active" id="page-home">
+          <div class="hero">
+            <div class="hero-content">
+              <div class="eyebrow">YOUR KOREAN JOURNEY STARTS HERE</div>
+              <h2>Annyeong!<br /><span>새로운 시작</span></h2>
+              <p>
+                Koreys tilini noldan o‘rgan. Boshlangʻich daraja uchun
+                grammatikalar 0 dan batafsil tushuntirilgan, har bir soʻz va
+                misolning oʻzbekcha tarjimasi va ovozli talaffuzi bor.
+              </p>
+              <button class="primary-btn" onclick="goToPage('alphabet')">
+                O‘rganishni boshlash ↗
+              </button>
+            </div>
+            <div class="hero-symbol">한글</div>
+          </div>
+
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-top">
+                <span class="stat-label">O‘rganilgan harflar</span>
+                <span class="stat-icon">한</span>
+              </div>
+              <div class="stat-value" id="statLetters">0 / 40</div>
+              <div class="stat-note">Hangul alifbosi</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Lug‘at boyligi</span>
+                <span class="stat-icon">▤</span>
+              </div>
+              <div class="stat-value" id="statWords">0</div>
+              <div class="stat-note">Yodlangan so‘zlar</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Test natijalari</span>
+                <span class="stat-icon">✳</span>
+              </div>
+              <div class="stat-value" id="statCorrect">0</div>
+              <div class="stat-note">To‘g‘ri javoblar</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-top">
+                <span class="stat-label">Umumiy rivojlanish</span>
+                <span class="stat-icon">↗</span>
+              </div>
+              <div class="stat-value" id="statProgress">0%</div>
+              <div class="stat-note">O‘rganish jarayoni</div>
+            </div>
+          </div>
+
+          <div class="section-head">
+            <div>
+              <h2>O‘rganish bo‘limlari</h2>
+              <p>O‘zingga mos bo‘limni tanla va davom et.</p>
+            </div>
+          </div>
+
+          <div class="learning-grid">
+            <article
+              class="lesson-card"
+              style="--glow: #54e7f4"
+              onclick="goToPage('alphabet')"
+            >
+              <div class="lesson-number">01 / ALPHABET</div>
+              <div class="lesson-symbol">가나다</div>
+              <h3>Hangul alifbosi</h3>
+              <p>Harflar, o'qilishi va real talaffuz audiolarini eshitish.</p>
+              <div class="progress-bar">
+                <div class="progress-fill" id="homeAlphabetProgress"></div>
+              </div>
+            </article>
+
+            <article
+              class="lesson-card"
+              style="--glow: #9a7bff"
+              onclick="goToPage('grammar')"
+            >
+              <div class="lesson-number">02 / GRAMMAR</div>
+              <div class="lesson-symbol">이에요</div>
+              <h3>Grammatika (0 dan)</h3>
+              <p>
+                Boshlang'ich qoidalar, chuqur tushuntirish, formulalar va
+                misollar.
+              </p>
+              <div class="progress-bar">
+                <div class="progress-fill" id="homeGrammarProgress"></div>
+              </div>
+            </article>
+
+            <article
+              class="lesson-card"
+              style="--glow: #ff76b7"
+              onclick="goToPage('vocabulary')"
+            >
+              <div class="lesson-number">03 / VOCABULARY</div>
+              <div class="lesson-symbol">사랑</div>
+              <h3>Kundalik lug‘at</h3>
+              <p>Eng kerakli so‘zlar, ovozli talaffuz va o'zbekcha tarjima.</p>
+              <div class="progress-bar">
+                <div class="progress-fill" id="homeVocabProgress"></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- ALFABET -->
+        <section class="content-panel" id="page-alphabet">
+          <div class="section-head">
+            <div>
+              <h2>Hangul alifbosi — 한글</h2>
+              <p>
+                Harfni bosib o‘rganilgan deb belgilang yoki 🔊 tugmasini bosib
+                talaffuzini tinglang.
+              </p>
+            </div>
+          </div>
+          <div class="alphabet-grid" id="alphabetContent"></div>
+        </section>
+
+        <!-- GRAMMATIKA -->
+        <section class="content-panel" id="page-grammar">
+          <div class="section-head">
+            <div>
+              <h2>Koreys tili grammatikasi (Beginner A1)</h2>
+              <p>
+                Har bir grammatikani bosib, uning 0 dan batafsil qoidalari va
+                ko'p misollarini ko'ring.
+              </p>
+            </div>
+            <button class="small-btn" onclick="goToPage('add-content')">
+              ➕ Yangi grammatika qo‘shish
+            </button>
+          </div>
+          <div class="grammar-grid" id="grammarContent"></div>
+        </section>
+
+        <!-- LUG'AT -->
+        <section class="content-panel" id="page-vocabulary">
+          <div class="section-head">
+            <div>
+              <h2>Beginner lug‘ati</h2>
+              <p>So‘zlarni qidiring, 🔊 ovozini eshiting va yodlang.</p>
+            </div>
+            <button class="small-btn" onclick="goToPage('add-content')">
+              ➕ Yangi so‘z qo‘shish
+            </button>
+          </div>
+          <input
+            class="search-box"
+            id="vocabSearch"
+            placeholder="🔎 Koreyscha yoki o‘zbekcha so‘z qidirish..."
+          />
+          <div class="vocab-list" id="vocabContent"></div>
+        </section>
+
+        <!-- TESTLAR -->
+        <section class="content-panel" id="page-quiz">
+          <div class="section-head">
+            <div>
+              <h2>Bilimingni tekshir</h2>
+              <p>To‘g‘ri javobni tanlang va natijangizni oshiring.</p>
+            </div>
+          </div>
+          <div class="quiz-box" id="quizContent"></div>
+        </section>
+
+        <!-- YANGI MA'LUMOT QO'SHISH -->
+        <section class="content-panel" id="page-add-content">
+          <div class="section-head">
+            <div>
+              <h2>Dasturga yangi ma’lumotlar qo‘shish</h2>
+              <p>
+                O‘zingiz o‘rganayotgan yangi grammatika, so‘zlar va testlarni
+                kiritib boring.
+              </p>
+            </div>
+          </div>
+
+          <div class="form-container">
+            <div class="tabs">
+              <button
+                class="tab-btn active"
+                onclick="switchTab('tab-grammar', this)"
+              >
+                Grammatika
+              </button>
+              <button class="tab-btn" onclick="switchTab('tab-vocab', this)">
+                So‘z (Lug‘at)
+              </button>
+              <button class="tab-btn" onclick="switchTab('tab-quiz', this)">
+                Test Savoli
+              </button>
+            </div>
+
+            <!-- GRAMMATIKA QO'SHISH FORMASI -->
+            <form id="formAddGrammar" onsubmit="saveNewGrammar(event)">
+              <div class="form-group">
+                <label>Grammatika qoidasi / Nomi (Masalan: ~고 싶다):</label>
+                <input
+                  type="text"
+                  id="gTitle"
+                  class="form-control"
+                  required
+                  placeholder="Masalan: ~고 싶다"
+                />
+              </div>
+              <div class="form-group">
+                <label>Tegi / Bo'limi (Masalan: ISTAK-XOHISH):</label>
+                <input
+                  type="text"
+                  id="gTag"
+                  class="form-control"
+                  placeholder="ISTAK-XOHISH / BOSHLANG'ICH"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Qoida formulasi (0 dan qo'shilishi):</label>
+                <input
+                  type="text"
+                  id="gFormula"
+                  class="form-control"
+                  placeholder="Masalan: Fe'l negizi + 고 싶다"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label>Qoida haqida batafsil tushuncha / Izoh:</label>
+                <textarea
+                  id="gDesc"
+                  class="form-control"
+                  required
+                  placeholder="Qachon ishlatilishi va qoidalari haqida batafsil yozing..."
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label
+                  >Misollar (Koreyscha = O'zbekcha tarjimasi formatida):</label
+                >
+                <textarea
+                  id="gExample"
+                  class="form-control"
+                  required
+                  placeholder="Masalan: 영화를 보고 싶어요 = Kino ko'rgim kelyapti&#10;한국에 가고 싶어요 = Koreyaga borgim kelyapti"
+                ></textarea>
+              </div>
+              <button type="submit" class="primary-btn">
+                Grammatika qo‘shish ✦
+              </button>
+            </form>
+
+            <!-- LUG'AT QO'SHISH FORMASI -->
+            <form
+              id="formAddVocab"
+              onsubmit="saveNewVocab(event)"
+              style="display: none"
+            >
+              <div class="form-group">
+                <label>Koreyscha so‘z (Hangul):</label>
+                <input
+                  type="text"
+                  id="vKr"
+                  class="form-control"
+                  required
+                  placeholder="Masalan: 학교"
+                />
+              </div>
+              <div class="form-group">
+                <label>Talaffuzi (O'qilishi):</label>
+                <input
+                  type="text"
+                  id="vPron"
+                  class="form-control"
+                  required
+                  placeholder="Masalan: Hak-kyo"
+                />
+              </div>
+              <div class="form-group">
+                <label>O'zbekcha tarjimasi:</label>
+                <input
+                  type="text"
+                  id="vUz"
+                  class="form-control"
+                  required
+                  placeholder="Masalan: Maktab"
+                />
+              </div>
+              <button type="submit" class="primary-btn">So‘z qo‘shish ✦</button>
+            </form>
+
+            <!-- TEST QO'SHISH FORMASI -->
+            <form
+              id="formAddQuiz"
+              onsubmit="saveNewQuiz(event)"
+              style="display: none"
+            >
+              <div class="form-group">
+                <label>Savol (Koreyscha so'z yoki gap):</label>
+                <input
+                  type="text"
+                  id="qTitle"
+                  class="form-control"
+                  required
+                  placeholder="Masalan: 학교"
+                />
+              </div>
+              <div class="form-group">
+                <label>Savol osti matni / Topshiriq:</label>
+                <input
+                  type="text"
+                  id="qSub"
+                  class="form-control"
+                  required
+                  placeholder="Ushbu so'zning tarjimasini toping:"
+                />
+              </div>
+              <div class="form-group">
+                <label>Variantlar (4 ta):</label>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 10px;
+                    margin-top: 5px;
+                  "
+                >
+                  <input
+                    type="text"
+                    id="qOpt0"
+                    class="form-control"
+                    placeholder="A variant"
+                    required
+                  />
+                  <input
+                    type="text"
+                    id="qOpt1"
+                    class="form-control"
+                    placeholder="B variant"
+                    required
+                  />
+                  <input
+                    type="text"
+                    id="qOpt2"
+                    class="form-control"
+                    placeholder="C variant"
+                    required
+                  />
+                  <input
+                    type="text"
+                    id="qOpt3"
+                    class="form-control"
+                    placeholder="D variant"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>To'g'ri javob variantini tanlang:</label>
+                <select id="qCorrect" class="form-control">
+                  <option value="0">A variant</option>
+                  <option value="1">B variant</option>
+                  <option value="2">C variant</option>
+                  <option value="3">D variant</option>
+                </select>
+              </div>
+              <button type="submit" class="primary-btn">
+                Test savoli qo‘shish ✦
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- NATIJALAR -->
+        <section class="content-panel" id="page-progress">
+          <div class="section-head">
+            <div>
+              <h2>Sening natijalaring</h2>
+              <p>O‘rganish davomida to‘plagan ko‘rsatkichlaringiz.</p>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-label">Harflar</div>
+              <div class="stat-value" id="progressLetters">0 / 40</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">So‘zlar</div>
+              <div class="stat-value" id="progressWords">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">To‘g‘ri javoblar</div>
+              <div class="stat-value" id="progressCorrect">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Rivojlanish</div>
+              <div class="stat-value" id="progressPercent">0%</div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal(event)">
+      <div class="modal">
+        <div class="modal-top">
+          <h2 id="modalTitle">Ma'lumot</h2>
+          <button class="close-btn" onclick="hideModal()">×</button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      // OVOZ TALAFFUZI FUNKSIYASI (SPEECH SYNTHESIS)
+      function speakKorean(text) {
+        if (!("speechSynthesis" in window)) {
+          showToast("Brauzeringiz ovozli talaffuzni qo'llab-quvvatlamaydi");
+          return;
+        }
+
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = "ko-KR";
+        utterance.rate = 0.8;
+
+        window.speechSynthesis.speak(utterance);
+      }
+
+      // BAZAVIY ALFABET MA'LUMOTLARI
+      const defaultAlphabet = [
+        { k: "ㄱ", s: "g / k", n: "Giyeok", v: "Undosh harf" },
+        { k: "ㄴ", s: "n", n: "Nieun", v: "Undosh harf" },
+        { k: "ㄷ", s: "d / t", n: "Digeut", v: "Undosh harf" },
+        { k: "ㄹ", s: "r / l", n: "Rieul", v: "Undosh harf" },
+        { k: "ㅁ", s: "m", n: "Mieum", v: "Undosh harf" },
+        { k: "ㅂ", s: "b / p", n: "Bieup", v: "Undosh harf" },
+        { k: "ㅅ", s: "s", n: "Siot", v: "Undosh harf" },
+        { k: "ㅇ", s: "ng", n: "Ieung", v: "Undosh harf" },
+        { k: "ㅈ", s: "j", n: "Jieut", v: "Undosh harf" },
+        { k: "ㅊ", s: "ch", n: "Chieut", v: "Undosh harf" },
+        { k: "ㅋ", s: "k", n: "Kieuk", v: "Undosh harf" },
+        { k: "ㅌ", s: "t", n: "Tieut", v: "Undosh harf" },
+        { k: "ㅍ", s: "p", n: "Pieup", v: "Undosh harf" },
+        { k: "ㅎ", s: "h", n: "Hieut", v: "Undosh harf" },
+        { k: "ㅏ", s: "a", n: "A", v: "Unli harf" },
+        { k: "ㅑ", s: "ya", n: "Ya", v: "Unli harf" },
+        { k: "ㅓ", s: "eo", n: "Eo", v: "Unli harf" },
+        { k: "ㅕ", s: "yeo", n: "Yeo", v: "Unli harf" },
+        { k: "ㅗ", s: "o", n: "O", v: "Unli harf" },
+        { k: "ㅛ", s: "yo", n: "Yo", v: "Unli harf" },
+        { k: "ㅜ", s: "u", n: "U", v: "Unli harf" },
+        { k: "ㅠ", s: "yu", n: "Yu", v: "Unli harf" },
+        { k: "ㅡ", s: "eu", n: "Eu", v: "Unli harf" },
+        { k: "ㅣ", s: "i", n: "I", v: "Unli harf" },
+      ];
+
+      // BEGINNER / A1 UCHUN 0 DAN BATAFSIL GRAMMATIKALAR
+      const defaultGrammar = [
+        {
+          title: "~이에요 / ~예요",
+          tag: "BOSHLANG'ICH KOPULA",
+          formula: "Ot + 이에요 / 예요 (O'zbek tilida: '-dir / emasman')",
+          desc: "Koreys tilida otlarni gap oxirida bo'limli holatda bog'lash uchun ishlatiladi. 'Bu ...dir' yoki 'Men ...man' iboralarini yasaydi.\n\n• Ot unli harf bilan tugasa ➔ ~예요 qo'shiladi.\n• Ot undosh harf (batchim) bilan tugasa ➔ ~이에요 qo'shiladi.",
+          examples: [
+            {
+              kr: "저는 학생이에요",
+              uz: "Men talabaman / o'quvchiman (undosh: 학생 + 이에요)",
+            },
+            { kr: "이것은 의자예요", uz: "Bu stuldir (unli: 의자 + 예요)" },
+            { kr: "저는 선생님이에요", uz: "Men o'qituvchiman" },
+            { kr: "제 이름은 산자르예요", uz: "Mening ismim Sanjar" },
+          ],
+        },
+        {
+          title: "~은 / ~는",
+          tag: "MAVZU YUKLAMASI",
+          formula: "Ot + 은 / 는 (O'zbek tilida: '-ga kelsak / -esa')",
+          desc: "Gapdagi asosiy mavzuni ko'rsatib beradi. Suhbatdosh e'tiborini shu so'zga qaratadi yoki ikkita narsani solishtiradi.\n\n• Ot undosh harf (batchim) bilan tugasa ➔ ~은\n• Ot unli harf bilan tugasa ➔ ~는",
+          examples: [
+            {
+              kr: "저는 우즈베키스탄 사람이에요",
+              uz: "Men O'zbekistonlikman (Men haqimda gap ketyapti)",
+            },
+            { kr: "이 책은 재미있어요", uz: "Bu kitob esa qiziqarli" },
+            { kr: "오늘은 날씨가 좋아요", uz: "Bugun esa havo yaxshi" },
+          ],
+        },
+        {
+          title: "~이 / ~가",
+          tag: "EGA QO'SHIMCHASI",
+          desc: "Gapda 'Kim?' yoki 'Nima?' so'rog'iga javob bo'ladigan asosiy bajaruvchi egaga qo'shiladi.\n\n• Batchim bo'lsa (undosh) ➔ ~이\n• Batchim bo'lmasa (unli) ➔ ~가",
+          formula: "Ot + 이 / 가",
+          examples: [
+            { kr: "비가 와요", uz: "Yomg'ir yog'yapti (Nima? -> Yomg'ir)" },
+            { kr: "친구가 왔어요", uz: "Do'stim keldi (Kim? -> Do'stim)" },
+            { kr: "물이 있어요", uz: "Suv bor" },
+          ],
+        },
+        {
+          title: "~을 / ~를",
+          tag: "TO'LDIRUVCHI Kelishigi",
+          formula: "Ot + 을 / 를 (O'zbek tilida: '-ni')",
+          desc: "Harakat yo'naltirilgan predmeti (nimani? kimni?) belgilab beruvchi tushum kelishigi qo'shimchasi.\n\n• Batchim bo'lsa ➔ ~을\n• Batchim bo'lmasa ➔ ~를",
+          examples: [
+            { kr: "밥을 먹어요", uz: "Ovqat yeyapman (Nimani? -> Ovqatni)" },
+            { kr: "물을 마셔요", uz: "Suv ichyapman" },
+            { kr: "한국어를 공부해요", uz: "Koreys tilini o'rganyapman" },
+          ],
+        },
+        {
+          title: "~에",
+          tag: "O'RIN-JOY VA VAQT",
+          formula: "O'rin-joy / Vaqt + 에 (O'zbek tilida: '-ga / -da')",
+          desc: "Harakat yo'naltirilgan joyni (qayerga?) hamda ish-harakat sodir bo'ladigan aniq vaqtni (qachon?) ko'rsatadi.",
+          examples: [
+            { kr: "학교에 가요", uz: "Maktabga boraman (Qayerga?)" },
+            { kr: "시장에도 가요", uz: "Bozorga ham boraman" },
+            { kr: "9시에 자요", uz: "Soat 9 da uyquga ketaman (Qachon?)" },
+          ],
+        },
+        {
+          title: "~에서",
+          tag: "HARAKAT SODIR BO'LADIGAN JOY",
+          formula: "Joy nomi + 에서 (O'zbek tilida: '-da / -dan')",
+          desc: "Biror faoliyat yoki harakat bajarilayotgan joyni bildiradi (~에 bilan adashtirmang, ~에서 da aktiv harakat bo'ladi).\nHarakat biror joydan boshlansa '-dan' ma'nosini ham beradi.",
+          examples: [
+            {
+              kr: "집에서 공부해요",
+              uz: "Uyda o'qiyapman (Uy ichida aktiv harakat)",
+            },
+            { kr: "식당에서 밥을 먹어요", uz: "Oshxonada ovqatlanyapman" },
+            { kr: "우즈베키스탄에서 왔어요", uz: "O'zbekistondan keldim" },
+          ],
+        },
+        {
+          title: "~아/어/여요",
+          tag: "HOZIRGI ZAMON FE'L",
+          formula: "Fe'l negizi + 아/어/여요",
+          desc: "Koreys tilida xushmuomala so'zlashuvda eng ko'p ishlatiladigan hozirgi va yaqin kelajak zamon shakli.\n\n1. Negizdagi oxirgi unli ㅏ yoki ㅗ bo'lsa ➔ ~아요 (가다->가요, 보다->봐요)\n2. Boshqa unlilar bo'lsa ➔ ~어요 (먹다->먹어요, 읽다->읽어요)\n3. 하다 bilan tugasa ➔ ~해요 bo'ladi (공부하다->공부해요)",
+          examples: [
+            { kr: "지금 영화를 봐요", uz: "Hozir kino ko'ryapman" },
+            { kr: "책을 읽어요", uz: "Kitob o'qiyapman" },
+            { kr: "매일 운동해요", uz: "Har kuni mashq qilaman" },
+          ],
+        },
+        {
+          title: "~고 싶다",
+          tag: "ISTAK VA XOHISH",
+          formula: "Fe'l negizi + 고 싶어요 (O'zbek tilida: '-gim kelyapti')",
+          desc: "So'zlovchining biror ishni bajarish xohishi yoki istagini bildiradi. Fe'lning dagon (다) qismi olib tashlanadi va ~고 싶어요 qo'shiladi.",
+          examples: [
+            { kr: "한국에 가고 싶어요", uz: "Koreyaga borgim kelyapti" },
+            { kr: "커피를 마시고 싶어요", uz: "Kofe ichgim kelyapti" },
+            { kr: "쉬고 싶어요", uz: "Dam olgim kelyapti" },
+          ],
+        },
+      ];
+
+      // LUG'AT
+      const defaultVocab = [
+        {
+          kr: "안녕하세요",
+          pron: "An-nyyeong-ha-se-yo",
+          uz: "Salom (hurmat bilan)",
+        },
+        { kr: "감사합니다", pron: "Gam-sa-ham-ni-da", uz: "Rahmat" },
+        {
+          kr: "죄송합니다",
+          pron: "Jwe-song-ham-ni-da",
+          uz: "Kechirasiz / Uzr",
+        },
+        { kr: "학생", pron: "Hak-saeng", uz: "Talaba / O'quvchi" },
+        { kr: "선생님", pron: "Seon-saeng-nim", uz: "O'qituvchi" },
+        { kr: "책", pron: "Chaek", uz: "Kitob" },
+        { kr: "물", pron: "Mul", uz: "Suv" },
+        { kr: "친구", pron: "Chin-gu", uz: "Do'st" },
+        { kr: "학교", pron: "Hak-kyo", uz: "Maktab / Universitet" },
+        { kr: "집", pron: "Jip", uz: "Uy" },
+        { kr: "가다", pron: "Ga-da", uz: "Bormoq" },
+        { kr: "오다", pron: "O-da", uz: "Kelmoq" },
+        { kr: "먹다", pron: "Meok-da", uz: "Yemoq" },
+        { kr: "마시다", pron: "Ma-si-da", uz: "Ichmoq" },
+        { kr: "사랑", pron: "Sa-rang", uz: "Sevgi / Muhabbat" },
+      ];
+
+      const defaultQuiz = [
+        {
+          q: "감사합니다",
+          sub: "Ushbu so'zning ma'nosi nima?",
+          options: ["Rahmat", "Salomat bo'ling", "Xayr", "Kechirasiz"],
+          answer: 0,
+        },
+        {
+          q: "학생",
+          sub: "Tarjimasini toping:",
+          options: ["O'qituvchi", "Talaba", "Shifokor", "Muhandis"],
+          answer: 1,
+        },
+        {
+          q: "물",
+          sub: "Koreyschadan tarjima qiling:",
+          options: ["Non", "Choy", "Suv", "Olma"],
+          answer: 2,
+        },
+        {
+          q: "학교",
+          sub: "Ushbu joy nomini toping:",
+          options: ["Kasalxona", "Maktab", "Kutubxona", "Bozor"],
+          answer: 1,
+        },
+      ];
+
+      // LOCALSTORAGE
+      let alphabet = defaultAlphabet;
+      let grammarList =
+        JSON.parse(localStorage.getItem("hanguk_custom_grammar")) ||
+        defaultGrammar;
+      let vocabList =
+        JSON.parse(localStorage.getItem("hanguk_custom_vocab")) || defaultVocab;
+      let quizData =
+        JSON.parse(localStorage.getItem("hanguk_custom_quiz")) || defaultQuiz;
+
+      let userProgress = JSON.parse(
+        localStorage.getItem("hanguk_progress"),
+      ) || {
+        learnedLetters: [],
+        learnedVocab: [],
+        correctAnswers: 0,
+      };
+
+      let currentQuizIndex = 0;
+
+      // SAHIFA ALMASHTIRISH
+      function goToPage(pageId) {
+        document
+          .querySelectorAll(".content-panel")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((b) => b.classList.remove("active"));
+
+        const targetPanel = document.getElementById("page-" + pageId);
+        const targetBtn = document.querySelector(`[data-page="${pageId}"]`);
+
+        if (targetPanel) targetPanel.classList.add("active");
+        if (targetBtn) targetBtn.classList.add("active");
+
+        const titles = {
+          home: "Koreys tiliga xush kelibsiz!",
+          alphabet: "Hangul alifbosi",
+          grammar: "Koreys tili grammatikasi (0 dan)",
+          vocabulary: "Kundalik lug‘at",
+          quiz: "Bilimingni tekshir",
+          "add-content": "Dasturga yangi ma’lumot qo‘shish",
+          progress: "Sening natijalaring",
+        };
+
+        document.getElementById("pageTitle").textContent =
+          titles[pageId] || "HANGUK";
+        document.getElementById("breadcrumb").textContent =
+          pageId.toUpperCase();
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        updateStats();
+      }
+
+      document.querySelectorAll("#navigation button").forEach((btn) => {
+        btn.addEventListener("click", () => goToPage(btn.dataset.page));
+      });
+
+      // STATISTIKA
+      function updateStats() {
+        const lettersCount = userProgress.learnedLetters.length;
+        const vocabCount = userProgress.learnedVocab.length;
+        const correctCount = userProgress.correctAnswers;
+        const totalPercent = Math.min(
+          100,
+          Math.round(
+            ((lettersCount + vocabCount) /
+              (alphabet.length + vocabList.length)) *
+              100,
+          ),
+        );
+
+        document.getElementById("statLetters").textContent =
+          `${lettersCount} / ${alphabet.length}`;
+        document.getElementById("statWords").textContent = vocabCount;
+        document.getElementById("statCorrect").textContent = correctCount;
+        document.getElementById("statProgress").textContent =
+          totalPercent + "%";
+
+        document.getElementById("progressLetters").textContent =
+          `${lettersCount} / ${alphabet.length}`;
+        document.getElementById("progressWords").textContent = vocabCount;
+        document.getElementById("progressCorrect").textContent = correctCount;
+        document.getElementById("progressPercent").textContent =
+          totalPercent + "%";
+
+        document.getElementById("homeAlphabetProgress").style.width =
+          Math.round((lettersCount / alphabet.length) * 100) + "%";
+        document.getElementById("homeVocabProgress").style.width =
+          Math.round((vocabCount / vocabList.length) * 100) + "%";
+        document.getElementById("homeGrammarProgress").style.width = "75%";
+
+        localStorage.setItem("hanguk_progress", JSON.stringify(userProgress));
+      }
+
+      // ALFABET
+      function renderAlphabet() {
+        const container = document.getElementById("alphabetContent");
+        container.innerHTML = alphabet
+          .map((item, idx) => {
+            const isLearned = userProgress.learnedLetters.includes(idx);
+            return `
+            <div class="letter-card ${isLearned ? "learned" : ""}">
+              <div onclick="toggleLetter(${idx})">
+                <div class="kr">${item.k}</div>
+                <div class="sound">${item.s}</div>
+                <div class="kind">${item.v}</div>
+              </div>
+              <button class="audio-btn" style="margin-top:8px;" onclick="event.stopPropagation(); speakKorean('${item.k}')" title="Talaffuz qilish">🔊</button>
+            </div>
+          `;
+          })
+          .join("");
+      }
+
+      function toggleLetter(idx) {
+        const pos = userProgress.learnedLetters.indexOf(idx);
+        if (pos > -1) {
+          userProgress.learnedLetters.splice(pos, 1);
+          showToast("Harf o'rganilmaganlarga o'tkazildi");
+        } else {
+          userProgress.learnedLetters.push(idx);
+          showToast("Harf o'rganildi! ✦");
+        }
+        renderAlphabet();
+        updateStats();
+      }
+
+      // GRAMMATIKANI RENDER QILISH
+      function renderGrammar() {
+        const container = document.getElementById("grammarContent");
+        container.innerHTML = grammarList
+          .map(
+            (item, idx) => `
+          <div class="grammar-card" onclick="openGrammarModal(${idx})">
+            <span class="tag">${item.tag}</span>
+            <h3>${item.title}</h3>
+            <p>${item.desc.substring(0, 85)}...</p>
+            <div class="click-hint">
+              <span>Batafsil o'rganish & Misollar</span>
+              <span>➔</span>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      // GRAMMATIKA MODALI (0 DAN BATAFSIL KO'RSATISH)
+      function openGrammarModal(idx) {
+        const item = grammarList[idx];
+        document.getElementById("modalTitle").textContent = item.title;
+
+        // Misollar ro'yxatini shakllantirish
+        let examplesHtml = "";
+        if (Array.isArray(item.examples)) {
+          examplesHtml = item.examples
+            .map(
+              (ex) => `
+            <div class="example-item">
+              <div>
+                <div class="example-kr">${ex.kr}</div>
+                <div class="example-uz">${ex.uz}</div>
+              </div>
+              <button class="audio-btn" onclick="speakKorean('${ex.kr}')" title="Talaffuz">🔊</button>
+            </div>
+          `,
+            )
+            .join("");
+        } else if (typeof item.example === "string") {
+          // O'zingiz formadan qo'shgan grammatikalar uchun
+          examplesHtml = item.example
+            .split("\n")
+            .map((line) => {
+              const parts = line.split("=");
+              const kr = parts[0] ? parts[0].trim() : line;
+              const uz = parts[1] ? parts[1].trim() : "";
+              return `
+              <div class="example-item">
+                <div>
+                  <div class="example-kr">${kr}</div>
+                  <div class="example-uz">${uz}</div>
+                </div>
+                <button class="audio-btn" onclick="speakKorean('${kr}')" title="Talaffuz">🔊</button>
+              </div>
+            `;
+            })
+            .join("");
+        }
+
+        document.getElementById("modalBody").innerHTML = `
+          <div class="modal-section">
+            <h4>Qoida formulasi</h4>
+            <div class="formula-box">${item.formula || item.title}</div>
+          </div>
+
+          <div class="modal-section">
+            <h4>Tushuntirish (0 dan)</h4>
+            <p style="white-space: pre-line; line-height: 1.8; color: #c0c6dc;">${item.desc}</p>
+          </div>
+
+          <div class="modal-section">
+            <h4>Misollar va Ovozli Talaffuz</h4>
+            <div>${examplesHtml}</div>
+          </div>
+        `;
+        document.getElementById("modalBackdrop").classList.add("show");
+      }
+
+      // LUG'AT
+      function renderVocab(filter = "") {
+        const container = document.getElementById("vocabContent");
+        const filtered = vocabList.filter(
+          (v) =>
+            v.kr.toLowerCase().includes(filter.toLowerCase()) ||
+            v.uz.toLowerCase().includes(filter.toLowerCase()),
+        );
+
+        if (filtered.length === 0) {
+          container.innerHTML = `<div style="text-align: center; color: var(--muted); padding: 20px;">So'z topilmadi</div>`;
+          return;
+        }
+
+        container.innerHTML = filtered
+          .map((item) => {
+            const originalIdx = vocabList.indexOf(item);
+            const isSaved = userProgress.learnedVocab.includes(originalIdx);
+            return `
+            <div class="vocab-item">
+              <div class="vocab-left">
+                <div>
+                  <div class="vocab-kr">
+                    ${item.kr}
+                    <button class="audio-btn" onclick="speakKorean('${item.kr}')" title="Talaffuz qilish">🔊</button>
+                  </div>
+                  <div class="vocab-pron">${item.pron}</div>
+                  <div class="vocab-uz">${item.uz}</div>
+                </div>
+              </div>
+              <button class="small-btn ${isSaved ? "active" : ""}" onclick="toggleVocab(${originalIdx})">
+                ${isSaved ? "Yodlandi ✓" : "Yodlash"}
+              </button>
+            </div>
+          `;
+          })
+          .join("");
+      }
+
+      function toggleVocab(idx) {
+        const pos = userProgress.learnedVocab.indexOf(idx);
+        if (pos > -1) {
+          userProgress.learnedVocab.splice(pos, 1);
+          showToast("So'z ro'yxatdan olib tashlandi");
+        } else {
+          userProgress.learnedVocab.push(idx);
+          showToast("So'z yodlandi! ✦");
+        }
+        renderVocab(document.getElementById("vocabSearch").value);
+        updateStats();
+      }
+
+      document.getElementById("vocabSearch").addEventListener("input", (e) => {
+        renderVocab(e.target.value);
+      });
+
+      // TESTLAR
+      function renderQuiz() {
+        const container = document.getElementById("quizContent");
+        if (currentQuizIndex >= quizData.length) {
+          container.innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+              <h3 style="font-size: 24px; margin-bottom: 10px;">Tabriklaymiz! 🎉</h3>
+              <p style="color: var(--muted); margin-bottom: 20px;">Siz mavjud barcha testlarni yakunladingiz.</p>
+              <button class="primary-btn" onclick="currentQuizIndex = 0; renderQuiz();">Qaytadan boshlash</button>
+            </div>
+          `;
+          return;
+        }
+
+        const q = quizData[currentQuizIndex];
+        container.innerHTML = `
+          <div class="quiz-progress"><div style="width: ${(currentQuizIndex / quizData.length) * 100}%"></div></div>
+          <div class="quiz-sub">Test ${currentQuizIndex + 1} / ${quizData.length}</div>
+          <div class="quiz-question">
+            ${q.q}
+            <button class="audio-btn" onclick="speakKorean('${q.q}')">🔊</button>
+          </div>
+          <div style="color: var(--muted); font-size: 13px; margin-bottom: 20px;">${q.sub}</div>
+          <div class="quiz-options">
+            ${q.options
+              .map(
+                (opt, i) => `
+              <button class="quiz-option" onclick="checkAnswer(${i}, ${q.answer})">${opt}</button>
+            `,
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      function checkAnswer(selected, correct) {
+        const options = document.querySelectorAll(".quiz-option");
+        options.forEach((btn, i) => {
+          if (i === correct) btn.classList.add("correct");
+          if (i === selected && selected !== correct)
+            btn.classList.add("wrong");
+          btn.disabled = true;
+        });
+
+        if (selected === correct) {
+          userProgress.correctAnswers++;
+          showToast("To'g'ri! +1 ball ✦");
+        } else {
+          showToast("Noto'g'ri!");
+        }
+
+        updateStats();
+        setTimeout(() => {
+          currentQuizIndex++;
+          renderQuiz();
+        }, 1200);
+      }
+
+      // TABLARNI ALMASHTIRISH
+      function switchTab(tabId, btn) {
+        document
+          .querySelectorAll(".tabs .tab-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        document.getElementById("formAddGrammar").style.display =
+          tabId === "tab-grammar" ? "block" : "none";
+        document.getElementById("formAddVocab").style.display =
+          tabId === "tab-vocab" ? "block" : "none";
+        document.getElementById("formAddQuiz").style.display =
+          tabId === "tab-quiz" ? "block" : "none";
+      }
+
+      // SAQLASH FORMALARI
+      function saveNewGrammar(e) {
+        e.preventDefault();
+        const newG = {
+          title: document.getElementById("gTitle").value,
+          tag: document.getElementById("gTag").value.toUpperCase(),
+          formula: document.getElementById("gFormula").value,
+          desc: document.getElementById("gDesc").value,
+          example: document.getElementById("gExample").value,
+        };
+
+        grammarList.push(newG);
+        localStorage.setItem(
+          "hanguk_custom_grammar",
+          JSON.stringify(grammarList),
+        );
+        renderGrammar();
+        e.target.reset();
+        showToast("Yangi grammatika muvaffaqiyatli qo'shildi!");
+        goToPage("grammar");
+      }
+
+      function saveNewVocab(e) {
+        e.preventDefault();
+        const newV = {
+          kr: document.getElementById("vKr").value,
+          pron: document.getElementById("vPron").value,
+          uz: document.getElementById("vUz").value,
+        };
+
+        vocabList.push(newV);
+        localStorage.setItem("hanguk_custom_vocab", JSON.stringify(vocabList));
+        renderVocab();
+        e.target.reset();
+        showToast("Yangi so'z muvaffaqiyatli qo'shildi!");
+        goToPage("vocabulary");
+      }
+
+      function saveNewQuiz(e) {
+        e.preventDefault();
+        const newQ = {
+          q: document.getElementById("qTitle").value,
+          sub: document.getElementById("qSub").value,
+          options: [
+            document.getElementById("qOpt0").value,
+            document.getElementById("qOpt1").value,
+            document.getElementById("qOpt2").value,
+            document.getElementById("qOpt3").value,
+          ],
+          answer: parseInt(document.getElementById("qCorrect").value),
+        };
+
+        quizData.push(newQ);
+        localStorage.setItem("hanguk_custom_quiz", JSON.stringify(quizData));
+        renderQuiz();
+        e.target.reset();
+        showToast("Yangi test savoli qo'shildi!");
+        goToPage("quiz");
+      }
+
+      // MODAL VA TOAST
+      function hideModal() {
+        document.getElementById("modalBackdrop").classList.remove("show");
+      }
+
+      function closeModal(e) {
+        if (e.target.id === "modalBackdrop") hideModal();
+      }
+
+      function showToast(text) {
+        const t = document.getElementById("toast");
+        t.textContent = text;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2000);
+      }
+
+      // INITIALIZE
+      window.addEventListener("DOMContentLoaded", () => {
+        renderAlphabet();
+        renderGrammar();
+        renderVocab();
+        renderQuiz();
+        updateStats();
+      });
+    </script>
+  </body>
+</html>
